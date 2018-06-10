@@ -2,10 +2,11 @@ import boto3
 import os
 from time import sleep
 
-def create(server_id):
-
-    dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+dynamodb = boto3.client('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
                         aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], region_name='us-west-2')
+
+
+def create(server_id):
 
     table = dynamodb.create_table(
         TableName=server_id,
@@ -28,13 +29,10 @@ def create(server_id):
         }
     )
 
-    table.meta.client.get_waiter('table_exists').wait(TableName='users')
+    #table.meta.client.get_waiter('table_exists').wait(TableName='users')
 
 
 def add_user(server_id, player_id):
-
-    dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-                        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], region_name='us-west-2')
     
     table = dynamodb.Table(server_id)
     
@@ -47,9 +45,6 @@ def add_user(server_id, player_id):
 
 
 def update_money(server_id, player_id, updated_money):
-
-    dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-                        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], region_name='us-west-2')
     
     table = dynamodb.Table(server_id)
 
@@ -66,8 +61,6 @@ def update_money(server_id, player_id, updated_money):
 
 def get_money(server_id, player_id):
 
-    dynamodb = boto3.client('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-                        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], region_name='us-west-2')
 
     response = dynamodb.list_tables()
 
@@ -81,8 +74,6 @@ def get_money(server_id, player_id):
         sleep(7)
         add_user(server_id, player_id)
 
-    dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-                        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], region_name='us-west-2')
     
     table = dynamodb.Table(server_id)
 
