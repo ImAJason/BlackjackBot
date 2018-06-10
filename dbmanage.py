@@ -2,7 +2,10 @@ import boto3
 import os
 from time import sleep
 
-dynamodb = boto3.client('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+                        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], region_name='us-west-2')
+
+dynamodbc = boto3.client('dynamodb', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
                         aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'], region_name='us-west-2')
 
 
@@ -62,7 +65,7 @@ def update_money(server_id, player_id, updated_money):
 def get_money(server_id, player_id):
 
 
-    response = dynamodb.list_tables()
+    response = dynamodbc.list_tables()
 
     server_exists = False
 
