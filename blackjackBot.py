@@ -2,6 +2,7 @@ from discord.ext import commands
 from blackjack import Game
 import dbmanage as db
 from decimal import *
+import os
 
 bot = commands.Bot(description="blackjackbot", command_prefix="t.")
 
@@ -21,5 +22,5 @@ async def blackjack(ctx):
     db.update_money(server_id, player_id, updated_money)
     return
 
-bot.run("NDU1MjE1NTY4MTYxODY1NzM5.Df4wtg.pMJ40Z6par_aNQd_yBreLelM3uU")
+bot.run(os.environ['TOKEN'])
 
